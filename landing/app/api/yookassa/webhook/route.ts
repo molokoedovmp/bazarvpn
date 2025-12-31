@@ -94,7 +94,7 @@ let payload: YooKassaPayload;
 
     const expiresInterval = `${subscriptionDurationDays} days`;
 
-    if (latestSub && latestSub.rowCount > 0) {
+    if ((latestSub?.rowCount ?? 0) > 0) {
       await client.query(
         "UPDATE subscriptions SET status='active', started_at=NOW(), expires_at=NOW() + $2::interval WHERE id=$1",
         [latestSub.rows[0].id, expiresInterval],
