@@ -1,0 +1,176 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 20%, rgba(76, 125, 255, 0.15), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(106, 208, 255, 0.12), transparent 35%),
+    #0b0c10;
+  color: #e8eef2;
+  padding: 32px 16px;
+}
+
+.card {
+  background: rgba(18, 21, 28, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.label {
+  margin: 0;
+  color: #8ea3b5;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+}
+
+.token {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.tokenLabel {
+  display: block;
+  color: #8ea3b5;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.tokenValue {
+  display: block;
+  word-break: break-all;
+  font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  color: #cde4ff;
+  margin-bottom: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 14px 0 8px 0;
+}
+
+.tab,
+.tabActive {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  color: #c4cdd8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tabActive {
+  background: linear-gradient(135deg, #4c7dff, #6ad0ff);
+  color: #0b0c10;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.download,
+.instructions {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.subTitle {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  color: #e8eef2;
+}
+
+.steps {
+  margin: 0;
+  padding-left: 18px;
+  color: #c4cdd8;
+  line-height: 1.6;
+  display: grid;
+  gap: 8px;
+}
+
+.buttonPrimary,
+.buttonGhost {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.buttonPrimary {
+  background: linear-gradient(135deg, #4c7dff, #6ad0ff);
+  color: #0b0c10;
+  box-shadow: 0 10px 30px rgba(76, 125, 255, 0.3);
+}
+
+.buttonPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 34px rgba(76, 125, 255, 0.4);
+}
+
+.buttonGhost {
+  background: transparent;
+  color: #cde4ff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.buttonGhost:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 20px 12px;
+  }
+  .title {
+    font-size: 22px;
+  }
+  .tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .actions {
+    flex-direction: column;
+  }
+}

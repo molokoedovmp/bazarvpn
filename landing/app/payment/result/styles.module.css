@@ -1,0 +1,86 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 20% 20%, rgba(60, 130, 255, 0.12), transparent 35%),
+    radial-gradient(circle at 80% 0%, rgba(100, 255, 200, 0.12), transparent 35%),
+    #0b0c10;
+  color: #e8eef2;
+  padding: 32px 16px;
+}
+
+.card {
+  background: rgba(18, 21, 28, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 32px 28px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.iconSuccess,
+.iconError {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.iconSuccess {
+  background: rgba(92, 225, 152, 0.12);
+  color: #7fffb2;
+  border: 1px solid rgba(92, 225, 152, 0.25);
+}
+
+.iconError {
+  background: rgba(255, 99, 71, 0.12);
+  color: #ff8366;
+  border: 1px solid rgba(255, 99, 71, 0.25);
+}
+
+.title {
+  font-size: 26px;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.5px;
+}
+
+.message {
+  margin: 0 0 10px 0;
+  color: #c4cdd8;
+  line-height: 1.6;
+}
+
+.meta {
+  color: #8ea3b5;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+.actions {
+  margin-top: 12px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4c7dff, #6ad0ff);
+  color: #0b0c10;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 10px 30px rgba(76, 125, 255, 0.3);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 34px rgba(76, 125, 255, 0.4);
+}

@@ -1,0 +1,17 @@
+# OS junk
+.DS_Store
+
+# Root env
+.env
+
+# Python
+__pycache__/
+*.pyc
+bot/.venv/
+
+# Node/Next
+landing/node_modules/
+landing/.next/
+landing/.env
+landing/.vercel
+landing/.turbo
