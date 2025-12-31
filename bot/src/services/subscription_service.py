@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any, Mapping
 
 from bot.src.repositories.subscription_repo import SubscriptionRepository
@@ -23,8 +23,9 @@ class SubscriptionStatusInfo:
 
 
 class SubscriptionService:
-    def __init__(self, subscription_repo: SubscriptionRepository) -> None:
+    def __init__(self, subscription_repo: SubscriptionRepository, default_duration_days: int = 30) -> None:
         self._subscription_repo = subscription_repo
+        self._default_duration_days = default_duration_days
 
     async def get_active_subscription(self, user_id: str) -> Mapping[str, Any] | None:
         return await self._subscription_repo.get_active_subscription(user_id)
@@ -45,3 +46,30 @@ class SubscriptionService:
         plan = subscription["plan"]
 
         return SubscriptionStatusInfo(status=status, expires_at=expires_at, plan=plan)
+
+    async def ensure_active_subscription(
+        self,
+        user_id: str,
+        allow_create: bool = False,
+        plan: str = "test",
+        duration_days: int | None = None,
+    ) -> Mapping[str, Any] | None:
+        active = await self._subscription_repo.get_active_subscription(user_id)
+        if active:
+            return active
+
+        if not allow_create:
+            return None
+
+        expires_at = datetime.now(timezone.utc).replace(tzinfo=None) + timedelta(
+            days=duration_days or self._default_duration_days
+        )
+        started_at = datetime.now(timezone.utc).replace(tzinfo=None)
+
+        return await self._subscription_repo.create_subscription(
+            user_id=user_id,
+            status="active",
+            plan=plan,
+            started_at=started_at,
+            expires_at=expires_at,
+        )

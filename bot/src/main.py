@@ -32,10 +32,17 @@ async def main() -> None:
     payment_repo = PaymentRepository(database)
     token_repo = TokenRepository(database)
 
-    subscription_service = SubscriptionService(subscription_repo)
+    subscription_service = SubscriptionService(
+        subscription_repo,
+        default_duration_days=config.subscription_duration_days,
+    )
     user_service = UserService(user_repo)
     payment_service = PaymentService(payment_repo, config)
-    vpn_service = VPNService(subscription_service, token_repo)
+    vpn_service = VPNService(
+        subscription_service,
+        token_repo,
+        allow_free_access=config.allow_free_vpn_access,
+    )
 
     bot = create_bot(config.bot_token)
     dispatcher = Dispatcher()

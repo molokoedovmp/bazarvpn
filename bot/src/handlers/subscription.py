@@ -6,6 +6,7 @@ from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import CallbackQuery, Message, User
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from bot.src.keyboards.main import MenuActions, main_menu_keyboard
 from bot.src.services.subscription_service import SubscriptionService
@@ -97,12 +98,52 @@ async def connect_vpn(
         await callback.answer("Подписка неактивна. Оформите оплату, чтобы получить доступ.", show_alert=True)
         return
 
+    builder = InlineKeyboardBuilder()
+    builder.button(text="🔄 Перевыпустить ключ", callback_data=MenuActions.REGENERATE_TOKEN)
+    builder.button(text="⬅️ Главное меню", callback_data="main_menu")
+    builder.adjust(1)
+
     try:
         await callback.message.edit_text(  # type: ignore[union-attr]
             f"Ваш доступ к VPN:\n{connection_link}",
-            reply_markup=main_menu_keyboard(),
+            reply_markup=builder.as_markup(),
         )
     except TelegramBadRequest:
         pass
     finally:
         await callback.answer()
+
+
+@router.callback_query(F.data == MenuActions.REGENERATE_TOKEN)
+async def regenerate_token(
+    callback: CallbackQuery,
+    user_service: UserService,
+    vpn_service: VPNService,
+) -> None:
+    tg_user = callback.from_user
+    if tg_user is None:
+        return
+
+    user = await _ensure_user_record(tg_user.id, user_service, tg_user)
+    if user is None:
+        return
+
+    new_link = await vpn_service.regenerate_token(str(user["id"]))
+    if new_link is None:
+        await callback.answer("Нет активной подписки. Оплатите или включите тестовый доступ.", show_alert=True)
+        return
+
+    builder = InlineKeyboardBuilder()
+    builder.button(text="🔄 Перевыпустить ключ", callback_data=MenuActions.REGENERATE_TOKEN)
+    builder.button(text="⬅️ Главное меню", callback_data="main_menu")
+    builder.adjust(1)
+
+    try:
+        await callback.message.edit_text(  # type: ignore[union-attr]
+            f"Ваш новый доступ к VPN:\n{new_link}",
+            reply_markup=builder.as_markup(),
+        )
+    except TelegramBadRequest:
+        pass
+    finally:
+        await callback.answer("Ключ обновлен", show_alert=True)

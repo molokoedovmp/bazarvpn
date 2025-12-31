@@ -17,6 +17,8 @@ class Settings:
     yookassa_shop_id: str | None
     yookassa_secret_key: str | None
     yookassa_return_url: str | None
+    allow_free_vpn_access: bool
+    subscription_duration_days: int
 
 
 def load_config() -> Settings:
@@ -38,6 +40,8 @@ def load_config() -> Settings:
     yookassa_shop_id = os.getenv("YOOKASSA_SHOP_ID")
     yookassa_secret_key = os.getenv("YOOKASSA_SECRET_KEY")
     yookassa_return_url = os.getenv("YOOKASSA_RETURN_URL", "https://bazarvpn.ru/thanks")
+    allow_free_vpn_access = os.getenv("ALLOW_FREE_VPN_ACCESS", "false").lower() == "true"
+    subscription_duration_days = int(os.getenv("SUBSCRIPTION_DURATION_DAYS", "30"))
 
     return Settings(
         bot_token=bot_token,
@@ -49,4 +53,6 @@ def load_config() -> Settings:
         yookassa_shop_id=yookassa_shop_id,
         yookassa_secret_key=yookassa_secret_key,
         yookassa_return_url=yookassa_return_url,
+        allow_free_vpn_access=allow_free_vpn_access,
+        subscription_duration_days=subscription_duration_days,
     )

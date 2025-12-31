@@ -7,6 +7,7 @@ class MenuActions:
     PAY_SUBSCRIPTION = "pay_subscription"
     SUBSCRIPTION_INFO = "subscription_info"
     HELP = "help"
+    REGENERATE_TOKEN = "regen_token"
 
 
 def main_menu_keyboard() -> InlineKeyboardMarkup:

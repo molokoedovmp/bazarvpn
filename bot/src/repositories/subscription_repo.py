@@ -38,3 +38,18 @@ class SubscriptionRepository:
         LIMIT 1;
         """
         return await self._db.pool.fetchrow(query, user_id)
+
+    async def create_subscription(
+        self,
+        user_id: str,
+        status: str,
+        plan: str,
+        started_at,
+        expires_at,
+    ) -> Mapping[str, Any] | Record | None:
+        query = """
+        INSERT INTO subscriptions (user_id, status, plan, started_at, expires_at)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING id, user_id, status, plan, started_at, expires_at, created_at;
+        """
+        return await self._db.pool.fetchrow(query, user_id, status, plan, started_at, expires_at)
