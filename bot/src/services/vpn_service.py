@@ -45,7 +45,7 @@ class VPNService:
             token_value = uuid.uuid4().hex
             await self._token_repo.create_token(subscription_id, token_value)
 
-        return f"https://bazarvpn.ru/connect/{token_value}"
+        return f"https://sub.bazarvpn.ru/connect/{token_value}"
 
     async def regenerate_token(self, user_id: str) -> Optional[str]:
         subscription = await self._ensure_subscription(user_id)
@@ -56,4 +56,4 @@ class VPNService:
         await self._token_repo.deactivate_tokens(subscription_id)
         token_value = uuid.uuid4().hex
         await self._token_repo.create_token(subscription_id, token_value)
-        return f"https://bazarvpn.ru/connect/{token_value}"
+        return f"https://sub.bazarvpn.ru/connect/{token_value}"
