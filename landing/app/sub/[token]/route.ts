@@ -18,8 +18,7 @@ async function findVpnUuid(token: string): Promise<string | null> {
       WHERE t.token = $1
         AND t.is_active = TRUE
         AND s.status = 'active'
-        AND s.expires_at IS NOT NULL
-        AND s.expires_at > NOW()
+        AND (s.expires_at IS NULL OR s.expires_at > NOW())
       LIMIT 1;
       `,
       [token],
