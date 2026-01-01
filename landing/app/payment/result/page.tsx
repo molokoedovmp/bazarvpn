@@ -24,8 +24,10 @@ export default function PaymentResult({ searchParams }: Props) {
   const isFailure = failureStates.has(normalizedStatus);
   const isSuccess =
     successStates.has(normalizedStatus) ||
-    normalizedStatus.startsWith("success") ||
-    (!normalizedStatus && Boolean(paymentId) && !isFailure);
+    normalizedStatus.includes("success") ||
+    normalizedStatus.includes("succeed") ||
+    (!isFailure && Boolean(paymentId)) ||
+    (!isFailure && normalizedStatus === "");
   return (
     <main className={styles.container}>
       <div className={styles.card}>
