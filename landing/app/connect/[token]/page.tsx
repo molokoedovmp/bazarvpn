@@ -41,7 +41,7 @@ function InstructionList({ connectUrl }: { connectUrl: string }) {
 
 export default function ConnectPage({ params }: { params: { token: string } }) {
   const [activeDevice, setActiveDevice] = useState<Device>("macos");
-  const connectUrl = useMemo(() => `https://bazarvpn.ru/connect/${params.token}`, [params.token]);
+  const connectUrl = useMemo(() => `https://sub.bazarvpn.ru/connect/${params.token}`, [params.token]);
 
   const handleCopy = async () => {
     try {
