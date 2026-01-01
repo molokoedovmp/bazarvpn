@@ -101,7 +101,7 @@ export default function ConnectPage({ params }: { params: { token: string } }) {
 
           <div className={styles.stepCard}>
             <p className={styles.subTitle}>Шаг 2. Импортируйте ссылку подключения</p>
-            <InstructionList device={activeDevice} connectUrl={connectUrl} />
+            <InstructionList connectUrl={connectUrl} />
           </div>
         </section>
       </div>
