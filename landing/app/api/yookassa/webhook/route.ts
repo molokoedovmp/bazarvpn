@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Pool } from "pg";
+import { Pool, PoolClient } from "pg";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,6 +28,14 @@ function isAuthorized(request: NextRequest): boolean {
   const decoded = Buffer.from(header.replace("Basic ", ""), "base64").toString("utf-8");
   const [user, pass] = decoded.split(":");
   return user === shopId && pass === secretKey;
+}
+
+async function ensureVpnUser(client: PoolClient, userId: string): Promise<void> {
+  const exists = await client.query("SELECT 1 FROM vpn_users WHERE user_id = $1 LIMIT 1", [userId]);
+  if (exists.rowCount && exists.rows.length > 0) {
+    return;
+  }
+  await client.query("INSERT INTO vpn_users (user_id, vpn_uuid) VALUES ($1, gen_random_uuid())", [userId]);
 }
 
 export async function POST(request: NextRequest) {
@@ -105,6 +113,8 @@ let payload: YooKassaPayload;
         [targetUserId, expiresInterval],
       );
     }
+
+    await ensureVpnUser(client, targetUserId);
 
     await client.query("COMMIT");
   } catch (error) {
