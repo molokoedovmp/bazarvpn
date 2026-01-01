@@ -9,9 +9,14 @@ type Props = {
 };
 
 export default function PaymentResult({ searchParams }: Props) {
-  const isSuccess = searchParams.status === "success" || searchParams.status === "succeeded";
+  const normalizedStatus = (searchParams.status || "").toLowerCase();
   const paymentId = searchParams.payment_id;
 
+  const successStates = new Set(["success", "succeeded", "paid", "done", "completed"]);
+  const failureStates = new Set(["fail", "failed", "canceled", "cancelled", "refused"]);
+
+  const isFailure = failureStates.has(normalizedStatus);
+  const isSuccess = successStates.has(normalizedStatus) || (!normalizedStatus && Boolean(paymentId));
   return (
     <main className={styles.container}>
       <div className={styles.card}>
