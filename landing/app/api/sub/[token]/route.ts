@@ -44,9 +44,10 @@ async function findActiveVpnUuid(token: string): Promise<string | null> {
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { token: string } },
+  { params }: { params: Promise<{ token: string }> },
 ): Promise<Response> {
-  const token = params.token;
+  const resolved = await params;
+  const token = resolved?.token;
   if (!token) {
     return new Response("", { status: 400 });
   }
