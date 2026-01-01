@@ -11,8 +11,11 @@ type Props = {
 };
 
 export default function PaymentResult({ searchParams }: Props) {
-  const normalizedStatus = (searchParams.status || "").toLowerCase();
-  const paymentId = searchParams.payment_id;
+  const rawStatus = Array.isArray(searchParams?.status)
+    ? searchParams.status[0]
+    : searchParams?.status || "";
+  const normalizedStatus = rawStatus.toLowerCase();
+  const paymentId = searchParams?.payment_id;
 
   const successStates = new Set(["success", "succeeded", "paid", "done", "completed"]);
   const failureStates = new Set(["fail", "failed", "canceled", "cancelled", "refused"]);
