@@ -57,6 +57,7 @@ type YooKassaPayload = {
 let payload: YooKassaPayload;
   try {
     payload = await request.json();
+    console.error("WEBHOOK_IN", JSON.stringify(payload));
   } catch {
     return NextResponse.json({ ok: false, error: "invalid_json" }, { status: 400 });
   }
@@ -117,9 +118,10 @@ let payload: YooKassaPayload;
     await ensureVpnUser(client, targetUserId);
 
     await client.query("COMMIT");
+    console.error("WEBHOOK_OK", JSON.stringify({ providerPaymentId, targetUserId }));
   } catch (error) {
     await client.query("ROLLBACK");
-    console.error("YooKassa webhook error:", error);
+    console.error("WEBHOOK_ERROR", error);
     return NextResponse.json({ ok: false, error: "internal_error" }, { status: 500 });
   } finally {
     client.release();

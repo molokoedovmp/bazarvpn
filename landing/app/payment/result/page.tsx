@@ -1,19 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./styles.module.css";
 
-export default function PaymentResult() {
+function PaymentResultContent() {
   const params = useSearchParams();
   const rawStatus = params.get("status") || "";
   const paymentId = params.get("payment_id") || undefined;
   const normalizedStatus = rawStatus.trim().toLowerCase();
 
   const successStates = new Set(["success", "succeeded", "paid", "done", "completed"]);
-  const failureStates = new Set(["fail", "failed", "canceled", "cancelled", "refused"]);
-
-  const isFailure = failureStates.has(normalizedStatus);
   const isSuccess =
     successStates.has(normalizedStatus) ||
     normalizedStatus.includes("success") ||
@@ -39,5 +37,13 @@ export default function PaymentResult() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function PaymentResult() {
+  return (
+    <Suspense fallback={<main className={styles.container}></main>}>
+      <PaymentResultContent />
+    </Suspense>
   );
 }
