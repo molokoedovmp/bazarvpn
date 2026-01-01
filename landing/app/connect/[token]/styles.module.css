@@ -95,18 +95,7 @@
 }
 
 .content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
   margin-top: 12px;
-}
-
-.download,
-.instructions {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 16px;
 }
 
 .subTitle {
@@ -115,13 +104,26 @@
   color: #e8eef2;
 }
 
+.stepsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stepCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 16px;
+}
+
 .steps {
   margin: 0;
   padding-left: 18px;
   color: #c4cdd8;
   line-height: 1.6;
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .buttonPrimary,

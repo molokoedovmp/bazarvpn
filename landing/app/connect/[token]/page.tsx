@@ -13,43 +13,23 @@ const deviceTitles: Record<Device, string> = {
 };
 
 const downloadLinks: Record<Device, string> = {
-  macos: "https://apps.apple.com/app/wireguard/id1451685025",
-  windows: "https://download.wireguard.com/windows-client/wireguard-installer.exe",
-  ios: "https://apps.apple.com/app/wireguard/id1441195209",
-  android: "https://play.google.com/store/apps/details?id=com.wireguard.android",
+  macos: "https://apps.apple.com/en/app/v2raytun/id6476628951",
+  windows: "https://storage.v2raytun.com/v2RayTun_Setup.exe",
+  ios: "https://apps.apple.com/en/app/v2raytun/id6476628951",
+  android: "https://play.google.com/store/apps/details?id=com.v2raytun.android",
 };
 
-function InstructionList({ device }: { device: Device }) {
-  const steps: Record<Device, string[]> = {
-    macos: [
-      "Скачайте и установите WireGuard.",
-      "Откройте приложение и нажмите “Import from file or archive” → “Import from URL”.",
-      "Вставьте ссылку подключения и подтвердите импорт.",
-      "Активируйте туннель переключателем.",
-    ],
-    windows: [
-      "Скачайте и установите WireGuard.",
-      "Запустите приложение и выберите “Import tunnel from URL”.",
-      "Вставьте ссылку подключения, сохраните профиль.",
-      "Включите туннель (Activate).",
-    ],
-    ios: [
-      "Установите WireGuard из App Store.",
-      "В приложении нажмите “Add a tunnel” → “Create from QR code or file” → выберите импорт по URL.",
-      "Вставьте ссылку подключения и добавьте профиль.",
-      "Включите туннель переключателем.",
-    ],
-    android: [
-      "Установите WireGuard из Google Play.",
-      "Откройте приложение и выберите “+” → “Import from URL”.",
-      "Вставьте ссылку подключения и сохраните профиль.",
-      "Активируйте туннель.",
-    ],
-  };
+function InstructionList({ connectUrl }: { connectUrl: string }) {
+  const steps: string[] = [
+    "Откройте приложение V2rayTun.",
+    "Найдите опцию импорта или добавления конфигурации по ссылке (URL).",
+    `Вставьте ссылку подключения:\n${connectUrl}`,
+    "Сохраните профиль и включите туннель.",
+  ];
 
   return (
     <ol className={styles.steps}>
-      {steps[device].map((step, idx) => (
+      {steps.map((step, idx) => (
         <li key={idx}>{step}</li>
       ))}
     </ol>
@@ -58,7 +38,7 @@ function InstructionList({ device }: { device: Device }) {
 
 export default function ConnectPage({ params }: { params: { token: string } }) {
   const [activeDevice, setActiveDevice] = useState<Device>("macos");
-  const connectUrl = useMemo(() => `https://connect.bazarvpn.ru/${params.token}`, [params.token]);
+  const connectUrl = useMemo(() => `https://bazarvpn.ru/connect/${params.token}`, [params.token]);
 
   const handleCopy = async () => {
     try {
@@ -106,24 +86,24 @@ export default function ConnectPage({ params }: { params: { token: string } }) {
           })}
         </div>
 
-        <div className={styles.content}>
-          <div className={styles.download}>
-            <p className={styles.subTitle}>Шаг 1. Установите приложение</p>
+        <section className={styles.stepsColumn}>
+          <div className={styles.stepCard}>
+            <p className={styles.subTitle}>Шаг 1. Установите приложение V2rayTun</p>
             <a
               className={styles.buttonPrimary}
               href={downloadLinks[activeDevice]}
               target="_blank"
               rel="noreferrer"
             >
-              Скачать {deviceTitles[activeDevice]}
+              Скачать для {deviceTitles[activeDevice]}
             </a>
           </div>
 
-          <div className={styles.instructions}>
-            <p className={styles.subTitle}>Шаг 2. Импортируйте ссылку</p>
-            <InstructionList device={activeDevice} />
+          <div className={styles.stepCard}>
+            <p className={styles.subTitle}>Шаг 2. Импортируйте ссылку подключения</p>
+            <InstructionList device={activeDevice} connectUrl={connectUrl} />
           </div>
-        </div>
+        </section>
       </div>
     </main>
   );
