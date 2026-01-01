@@ -1,4 +1,9 @@
 "use client";
+"use client";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 import Link from "next/link";
 import { Suspense } from "react";
@@ -31,9 +36,15 @@ function PaymentResultContent() {
         </p>
         {paymentId && <p className={styles.meta}>ID платежа: {paymentId}</p>}
         <div className={styles.actions}>
-          <Link href="/" className={styles.button}>
-            Вернуться на главную
-          </Link>
+          {isSuccess ? (
+            <Link href="https://t.me/aibazarvpnbot" className={styles.button}>
+              Вернуться в бота
+            </Link>
+          ) : (
+            <Link href="/" className={styles.button}>
+              Вернуться на главную
+            </Link>
+          )}
         </div>
       </div>
     </main>
