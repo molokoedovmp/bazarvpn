@@ -32,19 +32,13 @@ function PaymentResultContent() {
         <p className={styles.message}>
           {isSuccess
             ? "Спасибо! Мы обрабатываем ваш платеж. Подписка активируется автоматически."
-            : "Платеж не был завершен. Попробуйте еще раз или свяжитесь с поддержкой."}
+            : "Платеж не был завершен. Попробуйте еще раз или свяжитесь с поддержкой в боте."}
         </p>
         {paymentId && <p className={styles.meta}>ID платежа: {paymentId}</p>}
         <div className={styles.actions}>
-          {isSuccess ? (
-            <Link href="https://t.me/aibazarvpnbot" className={styles.button}>
-              Вернуться в бота
-            </Link>
-          ) : (
-            <Link href="/" className={styles.button}>
-              Вернуться на главную
-            </Link>
-          )}
+          <Link href="https://t.me/aibazarvpnbot" className={styles.button}>
+            {isSuccess ? "Вернуться в бота" : "Связаться в боте"}
+          </Link>
         </div>
       </div>
     </main>
