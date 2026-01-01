@@ -1,22 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import styles from "./styles.module.css";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
-type Props = {
-  searchParams: {
-    status?: string;
-    payment_id?: string;
-  };
-};
-
-export default function PaymentResult({ searchParams }: Props) {
-  const rawStatus = Array.isArray(searchParams?.status)
-    ? searchParams.status[0]
-    : searchParams?.status || "";
+export default function PaymentResult() {
+  const params = useSearchParams();
+  const rawStatus = params.get("status") || "";
+  const paymentId = params.get("payment_id") || undefined;
   const normalizedStatus = rawStatus.trim().toLowerCase();
-  const paymentId = searchParams?.payment_id;
 
   const successStates = new Set(["success", "succeeded", "paid", "done", "completed"]);
   const failureStates = new Set(["fail", "failed", "canceled", "cancelled", "refused"]);
@@ -26,6 +18,7 @@ export default function PaymentResult({ searchParams }: Props) {
     successStates.has(normalizedStatus) ||
     normalizedStatus.includes("success") ||
     normalizedStatus.includes("succeed");
+
   return (
     <main className={styles.container}>
       <div className={styles.card}>
