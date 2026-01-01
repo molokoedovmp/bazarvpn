@@ -53,7 +53,7 @@ export async function GET(
     });
   }
 
-  const cfg = `vless://${vpnUuid}@us.example.com:443?security=reality&type=tcp#USA-VLESS`;
+  const cfg = `vless://${vpnUuid}@184.174.96.8:443?security=reality&type=tcp&flow=xtls-rprx-vision&pbk=AhN6Vku_bbOZOwk1_Snr11qCLnVKuJ1V7jZw1HieyXo&sni=www.cloudflare.com&fp=chrome#USA`;
 
   return new NextResponse(cfg, {
     status: 200,
