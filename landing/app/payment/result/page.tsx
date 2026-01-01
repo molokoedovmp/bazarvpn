@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./styles.module.css";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 type Props = {
   searchParams: {
@@ -14,14 +15,17 @@ export default function PaymentResult({ searchParams }: Props) {
   const rawStatus = Array.isArray(searchParams?.status)
     ? searchParams.status[0]
     : searchParams?.status || "";
-  const normalizedStatus = rawStatus.toLowerCase();
+  const normalizedStatus = rawStatus.trim().toLowerCase();
   const paymentId = searchParams?.payment_id;
 
   const successStates = new Set(["success", "succeeded", "paid", "done", "completed"]);
   const failureStates = new Set(["fail", "failed", "canceled", "cancelled", "refused"]);
 
   const isFailure = failureStates.has(normalizedStatus);
-  const isSuccess = successStates.has(normalizedStatus) || (!normalizedStatus && Boolean(paymentId));
+  const isSuccess =
+    successStates.has(normalizedStatus) ||
+    normalizedStatus.startsWith("success") ||
+    (!normalizedStatus && Boolean(paymentId) && !isFailure);
   return (
     <main className={styles.container}>
       <div className={styles.card}>
