@@ -119,11 +119,40 @@
 
 .steps {
   margin: 0;
-  padding-left: 18px;
-  color: #c4cdd8;
-  line-height: 1.6;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stepItem {
   display: grid;
-  gap: 6px;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px;
+  color: #c4cdd8;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.stepNumber {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4c7dff, #6ad0ff);
+  color: #0b0c10;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+}
+
+.stepText {
+  white-space: pre-wrap;
 }
 
 .buttonPrimary,

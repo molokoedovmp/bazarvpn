@@ -22,7 +22,7 @@ const downloadLinks: Record<Device, string> = {
 function InstructionList({ connectUrl }: { connectUrl: string }) {
   const steps: string[] = [
     "Откройте приложение V2rayTun.",
-    "Найдите опцию импорта или добавления конфигурации по ссылке (URL).",
+    "Нажмите добавить/импорт по ссылке (URL).",
     `Вставьте ссылку подключения:\n${connectUrl}`,
     "Сохраните профиль и включите туннель.",
   ];
@@ -30,7 +30,10 @@ function InstructionList({ connectUrl }: { connectUrl: string }) {
   return (
     <ol className={styles.steps}>
       {steps.map((step, idx) => (
-        <li key={idx}>{step}</li>
+        <li key={idx} className={styles.stepItem}>
+          <span className={styles.stepNumber}>{idx + 1}</span>
+          <span className={styles.stepText}>{step}</span>
+        </li>
       ))}
     </ol>
   );
