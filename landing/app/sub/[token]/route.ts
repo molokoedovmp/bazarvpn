@@ -35,9 +35,9 @@ async function findVpnUuid(token: string): Promise<string | null> {
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { token: string } },
-): Promise<NextResponse> {
-  const token = params.token;
+  context: { params: Promise<{ token: string }> },
+): Promise<Response> {
+  const { token } = await context.params;
 
   if (!token) {
     return new NextResponse("forbidden\n", {
